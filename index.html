@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background:#8c9499dd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #f4f4f4;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 370px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      display: none;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: rgb(218, 65, 10);
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+
+  </style>
+</head>
+<body>
+   
+  <div class="container">
+     <h1>FORM VALIDATION</h1>
+    <form id="regForm" novalidate>
+      <div class="form-group">
+        <input type="text" id="name" placeholder="Name">
+        <span class="error" id="nameError">Name cannot be empty</span>
+      </div>
+      <div class="form-group">
+        <input type="text" id="email" placeholder="Email">
+        <span class="error" id="emailError">Please enter a valid email</span>
+      </div>
+      <div class="form-group">
+        <input type="password" id="password" placeholder="Password">
+        <span class="error" id="passwordError">Password must be at least 6 characters</span>
+      </div>
+      <button type="submit" id="submitBtn" disabled>Register✅</button>
+    </form>
+  </div>
+
+  <script>
+    let nameInput = document.getElementById("name");
+    let emailInput = document.getElementById("email");
+    let passwordInput = document.getElementById("password");
+    let submitBtn = document.getElementById("submitBtn");
+
+    let nameError = document.getElementById("nameError");
+    let emailError = document.getElementById("emailError");
+    let passwordError = document.getElementById("passwordError");
+
+    function validateForm() {
+      let valid = true;
+
+      // Name validation
+      if (nameInput.value.trim() === "") {
+        nameError.style.display = "block";
+        valid = false;
+      } else {
+        nameError.style.display = "none";
+      }
+
+      // Email validation (basic regex)
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value.trim())) {
+        emailError.style.display = "block";
+        valid = false;
+      } else {
+        emailError.style.display = "none";
+      }
+
+      // Password validation
+      if (passwordInput.value.length < 6) {
+        passwordError.style.display = "block";
+        valid = false;
+      } else {
+        passwordError.style.display = "none";
+      }
+
+      // Enable/Disable button
+      submitBtn.disabled = !valid;
+      return valid;
+    }
+
+    // Real-time validation
+    nameInput.addEventListener("input", validateForm);
+    emailInput.addEventListener("input", validateForm);
+    passwordInput.addEventListener("input", validateForm);
+
+    // On submit
+    document.getElementById("regForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      if (validateForm()) {
+        alert("☺️Congratulations Form Submitted Successfully ☺️!");
+        this.reset();
+        submitBtn.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>
